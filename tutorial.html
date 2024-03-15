@@ -9,9 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Rich" />
+<meta name="author" content="Rich Ramsey" />
 
-<meta name="date" content="2024-03-07" />
+<meta name="date" content="2024-03-15" />
 
 <title>Towards a more reproducible scientific workflow in R and R Studio: A tutorial</title>
 
@@ -1487,20 +1487,25 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">Towards a more reproducible scientific
 workflow in R and R Studio: A tutorial</h1>
-<h4 class="author">Rich</h4>
-<h4 class="date">2024-03-07</h4>
+<h4 class="author">Rich Ramsey</h4>
+<h4 class="date">2024-03-15</h4>
 
 </div>
 
 
+<div style="page-break-after: always;"></div>
 <div id="background-and-aims" class="section level1">
 <h1>Background and aims</h1>
 <p><strong><em>Why bother creating a reproducible
 workflow?</em></strong></p>
-<p>A foundation of science is that it should be open and reproducible by
-others. However, that’s quite a tricky goal to achieve and not many
-people do so on a routine basis (at least not in psychology and human
-neuroscience disciplines where I have most experience).</p>
+<p>A fundamental aspect of scientific research is that it should be open
+to others and reproducible. However, not many people achieve that goal
+on a routine basis (at least not in the disciplines that I’m most
+familiar with, which include psychology and human neuroscience).</p>
+<p>For the benefit of science, adopting research practices that aid
+transparency and computational reproducibility helps to create a
+research culture where independent verification and collaboration are
+the norm, rather than the exception.</p>
 <p>From a more selfish perspective, developing a reproducible and
 consistent workflow is important for your future self. That is, you (and
 your lab members) benefit if things are easy to reproduce in 6 days, 6
@@ -1572,6 +1577,7 @@ example of the workflow in practice.</p>
 <p><strong>4) Project setup practical examples.</strong></p>
 <p>Practical examples of how to set things up are given with screenshots
 to illustrate.</p>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div id="project-setup" class="section level1">
@@ -1673,21 +1679,20 @@ engineering (at least it does to my untrained eye).</p>
 be time-consuming and hog space on your machine, renv() creates a cache
 that all R projects can draw from.</li>
 <li>If a specific package version has been previously downloaded into
-the cache, your R project will just link to the project from the cache,
-rather than re-download it.</li>
+the cache, your R project will just link to the cache, rather than
+re-download the specific package version.</li>
+<li>That all sounds very sensible to me, but I’m not an engineer, so
+what do I know?</li>
 </ul>
-<p>That all sounds very sensible to me, but I’m not an engineer, so what
-do I know?</p>
 </div>
 <div id="version-control-via-git" class="section level2">
 <h2>Version control via git</h2>
 <p>For those like me that use R Studio and would not consider themselves
 to be a particularly experienced programmer, then read this outstanding
-tutorial on git with R Studio: <a href="https://journals.sagepub.com/doi/abs/10.1177/2515245918754826">Vuorre
+tutorial on using git with R Studio: <a href="https://journals.sagepub.com/doi/abs/10.1177/2515245918754826">Vuorre
 &amp; Curley, 2018</a>.</p>
 <p>This tutorial walks you through the value of using version control
-via git, as well as how to get it done when you primarily use R
-Studio.</p>
+via git, as well as how to do so when you primarily use R Studio.</p>
 <p>One thing to note, git is a general piece of version control software
 that is not tied to R. It is therefore useful for keeping track of all
 types of files and their version histories.</p>
@@ -1708,11 +1713,13 @@ the project at that time.</li>
 <p><strong><em>git warning</em></strong></p>
 <p>Initially, git is going to seem very weird. There is no denying that.
 It takes a little bit of getting used to, but the benefits are immense
-because you are then using a tool that was designed for version control
-to do version control. And that makes sense in my mind in general, and
-especially compared to the alternatives (e.g., manually renaming files).
-As such, you benefit from someone else doing the hard work to build the
-relevant infrastructure.</p>
+in the end because you can transition to using a tool that was designed
+specifically for version control to do version control. And that makes
+sense in my mind in general, and especially compared to the alternatives
+(e.g., manually renaming files). As such, you benefit from someone else
+doing the hard work to build the relevant infrastructure that is
+purpose-built for efficiently and effectively tracking version
+histories.</p>
 </div>
 <div id="collaboration-and-code-sharing-via-github" class="section level2">
 <h2>Collaboration and code sharing via GitHub</h2>
@@ -1724,8 +1731,8 @@ are ready to do so.</p>
 online repository that is stored on GitHub.</li>
 <li>When you “commit” a change, you can simply “push” the commit to
 GitHub.</li>
-<li>At that point, the online version is the same as the location
-version.</li>
+<li>At that point, the online version is the same as the local version
+on your machine.</li>
 <li>This process is convenient, which makes the possibility of
 collaborating and sharing projects an easy option, since you do not do
 anything extra to the local folder and you don’t drag and drop files to
@@ -1737,21 +1744,21 @@ if and how you want to integrate those changes.</li>
 </div>
 <div id="prepare-a-manuscript-in-r-markdown-using-the-papaja-package" class="section level2">
 <h2>Prepare a manuscript in R Markdown using the papaja() package</h2>
-<p>papaja is a great package that let’s you create a manuscript using R
-Markdown and format it according to the American Psychological
-Association (APA) guidelines. You do not need to use papaja to write
-manuscript in R markdown and you definitely do not need to follow the
+<p>papaja() is a great package that let’s you create a manuscript using
+R Markdown and format it according to the American Psychological
+Association (APA) guidelines. You don’t need to use papaja() to write
+manuscripts in R markdown and you definitely don’t need to follow the
 APA guidelines. But since my lab does research in experimental
-psychology and cognitive neuroscience, it seemed a good place to start.
-The main benefits stem from using R Markdown to write manuscripts.
-papaja is just one very good example package to help you achieve that
-aim.</p>
+psychology and cognitive neuroscience, it seemed a reasonable place to
+start. The main benefits stem from using R Markdown to write
+manuscripts. papaja() is just one very good example package to help you
+achieve that aim.</p>
 <p>Some of the benefits of using R Markdown to write manuscripts are as
 follows:</p>
 <ul>
 <li>computer code and prose can be written in one document.</li>
 <li>you can output to a range of different file formats, such as .html,
-word or pdf.</li>
+.doc or pdf.</li>
 <li>changes can be tracked via git just like another file.</li>
 </ul>
 <p>Further details can be found in the following links.</p>
@@ -1759,8 +1766,7 @@ word or pdf.</li>
 <p>papaja manual: <a href="https://frederikaust.com/papaja_man/" class="uri">https://frederikaust.com/papaja_man/</a></p>
 <p>My advice would be to read the manual from start to finish as it
 isn’t overly long, but it is really helpful and instructive. Then I
-would add in a few extras that I mentioned below in my lab’s
-workflow.</p>
+would add in a few extras that I mention below in my lab’s workflow.</p>
 <p>The main emphasis from the papaja manual is having one big document
 to analyse data and write a manuscript, which spans data, code, prose
 and manuscript formatting. For some projects, this seems fine and
@@ -1769,17 +1775,18 @@ projects, including most of the projects that my lab works on, I find
 that there is just too much for one document and I get overwhelmed.
 Instead, I tend to encourage a modular approach (see next section for
 details).</p>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div id="project-organisation" class="section level1">
 <h1>Project organisation</h1>
 <p>So far, we’ve covered the main component pieces that we are using to
 create a reproducible environment in R, track changes via git,
-collaborate and share code via github and write a manuscript in R
+collaborate and share code via GitHub and write a manuscript in R
 Markdown with papaja.</p>
-<p>But how should we structure things to put all of that together? We
-have some choices here, two of which I refer to as “monsters” and
-“modules”.</p>
+<p>But how should we structure things to put all of those pieces
+together? We have some choices here, two of which I refer to as
+“monsters” and “modules”.</p>
 <div id="monsters-vs.-modules" class="section level2">
 <h2>Monsters vs. modules</h2>
 <p>A “monster” structure would be one massive beast of an R Markdown
@@ -1796,10 +1803,11 @@ appealing for linking data and model output to plots and tables, as they
 are all created in one single file. I’m sure there is some technical
 language from computer science that explains the benefits of this kind
 of workflow, in terms of computational efficiency and the minimisation
-of bugs and code breakdowns. But what do I know? My sense would be that
-monster workflows are good when the analyses are relatively simple. For
-example, if data files are not overly large and only a few analyses are
-run, then it seems like it would be a perfectly sensible and preferable
+of bugs and code breakdowns. But I as I said earlier, I’m not a computer
+scientist, so I’m just guessing. My sense would be that monster
+workflows are good when the analyses are relatively simple. For example,
+if data files are not overly large and only a few analyses are run, then
+it seems like it would be a perfectly sensible and preferable
 choice.</p>
 <p>An example is here from Lisa DeBruine’s group: <a href="https://osf.io/eb9dq" class="uri">https://osf.io/eb9dq</a></p>
 </div>
@@ -1813,7 +1821,8 @@ weeks to run. I know you can use the “cache” function in R Markdown
 chunks to save re-doing costly computations. But at the moment, I just
 prefer to split up the main tasks into separate modules and scripts. As
 such, this is the workflow that I outline below to provide a concrete
-example.</p>
+example of my lab’s current approach.</p>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 </div>
@@ -1822,12 +1831,15 @@ example.</p>
 <p>Irrespective of the way the project is organised (i.e., monster vs
 modular), my lab tries to adopt a consistent data science workflow or
 structure. The specific choices we make here are not important for
-creating a reproducible workflow. But by providing a real example of a
-typical dataset and analysis pipeline (rather than using simple example
-datasets), it might help folks understand our choices a little more. It
-will also help my lab members (or anyone else) to get their hands dirty
-in the weeds of a typical data analysis pipeline. So, as you read what
-follows, you can head to the /exp1/ folder and take a look at the
+creating a reproducible workflow. In other words, whatever analysis
+pipeline you use within R, you could always pair that with renv(), git,
+GitHub and papaja. But by providing a real example of a typical dataset
+and analysis pipeline (rather than using simple example datasets), it
+might help folks understand our choices a little more. It will also help
+my lab members (or anyone else) to get their hands dirty with one of our
+typical data analysis pipelines. So, as you read what follows, if you’re
+interested in digging into the analysis weeds, you can head to the
+<strong>/exp1/</strong> folder and take a look at the specific analysis
 scripts themselves.</p>
 <p>If a given project followed the general setup, which I outlined
 above, it would mean that the project folder would already contain the
@@ -1838,7 +1850,9 @@ project).</li>
 <li>A renv.lock file.</li>
 <li>A /renv/ folder</li>
 <li>A readme.md file. readme files are very important. I would make one
-for <strong>EVERY SINGLE</strong> project. See some advice <a href="https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/">here</a>
+for <strong>EVERY SINGLE</strong> project that you ever do. I cannot
+stress how important readme files are for your future self when you want
+to return to a project. See some advice <a href="https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/">here</a>
 on how to write one.</li>
 </ul>
 <p>In addition to these folders, we would then have the following
@@ -1858,7 +1872,8 @@ the contents of the manuscript folder.</p>
 for multi-experiment papers, which would be the norm in my lab (i.e.,
 exp1, exp2, exp3). But, for now, only exp1 has any content in it.</p>
 <p>In each <strong>/exp/</strong> folder, we would typically include a
-series of .Rmd files and further sub-folders.</p>
+series of .Rmd files and further sub-folders. These files and folders
+are as follows:</p>
 <div id="files" class="section level3">
 <h3>Files</h3>
 <p><strong>wrangle.Rmd</strong></p>
@@ -1900,7 +1915,8 @@ the manuscript.</p>
 <p><strong>manuscript.pdf</strong></p>
 <p>This is the pdf document that is produced.</p>
 <p><strong>manuscript.tex</strong></p>
-<p>A tex file that is produced when outputing to pdf.</p>
+<p>A tex file (i.e., LaTeX file) that is produced when outputing to
+pdf.</p>
 <p><strong>r-references.bib</strong></p>
 <p>A biblatex file for automatically citing the loaded r packages. See
 the papaja tutorial for details.</p>
@@ -1934,6 +1950,7 @@ any additional citations as they are inserted into the document.</p>
 presented in the text rather than at the end of the document.</p>
 <p>setting header-includes to :raggedbottom makes the placing of text
 and figures as I think you might want it.</p>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 </div>
@@ -1942,17 +1959,17 @@ and figures as I think you might want it.</p>
 <p>There is a clear need for scientific research to be more
 computationally reproducible. This is important when sharing your
 research with others that are external to your research group (e.g.,
-journals, academics, grant bodies, industry, etc.). Being able to
-understand and reproduce past work in an efficient and effective manner
-is equally as important for your future self, as well as collaborators
-inside and outside of the lab.</p>
+journals, academics, grant bodies, industry, etc.). Understanding and
+reproducing past work in an efficient and effective manner is equally as
+important for your future self, as well as collaborators inside and
+outside of the lab.</p>
 <p>But there is no such thing as a free lunch in this context. The steps
 that I have outlined above take a little bit of getting used to and
 there needs to be a healthy dose of expectation management in the
 process of ascending the learning curve. It will be a pain in the
-beginning as there are lots of new things to get your head around. But I
-can talk from experience, that it gets easier relatively quickly and it
-is not long before you can see the obvious benefits.</p>
+beginning as there are lots of new things to get your head around. But,
+in my experience, it gets easier relatively quickly and it is not long
+before you can see the obvious benefits.</p>
 <p>In the following sections, I review a few key aspects of the proposed
 workflow and evaluate them against the alternatives.</p>
 <div id="package-management-with-renv-and-version-control-with-git" class="section level2">
@@ -1962,15 +1979,15 @@ people off. But, if we only consider data analysis and not writing
 manuscripts, this feels like a no-brainer to me. In other words, for the
 purposes of data analysis, I would definitely incorporate renv() and git
 (as well as github) into your workflow. The benefits hugely outweigh the
-costs.</p>
+initial learning curve costs.</p>
 </div>
 <div id="is-writing-in-r-markdown-actually-any-better-than-writing-in-ms-word" class="section level2">
 <h2>Is writing in R markdown actually any better than writing in MS
 Word?</h2>
 <p>I don’t have that much experience writing manuscripts in R Markdown,
-so it is new to me at this point. My initial sense into writing
-manuscripts in this way along with reading a bunch of blog posts is as
-follows.</p>
+so it is still new to me at this point. My initial impression from
+writing a few manuscripts in this way along with reading a bunch of blog
+posts is as follows:</p>
 <ul>
 <li>You probably save no time overall compared to writing manuscripts in
 MS word, but you have a very different product.</li>
@@ -1982,10 +1999,11 @@ insert figures when updating an analysis in a revised manuscript.</li>
 <li>If you use R more generally, it is easier for things to fit into an
 ecosystem and easier to make progress, given that you have a higher
 baseline level of experience.</li>
-<li>Follow principles of behaviour change and do not try to adopt
-everything at once. Instead, gradually build the component processes
-into your workflow. Once a component feels comfortable incorporate the
-next piece into your workflow. The gradual build might be as follows:
+<li>If you start to make the transition, follow principles of behaviour
+change and do not try to adopt everything at once. Instead, gradually
+build the component processes into your workflow. Once a component feels
+comfortable incorporate the next piece into your workflow. The gradual
+build might be as follows:
 <ul>
 <li>Use renv() and git immediately.</li>
 <li>then connect to GitHub and share code/collaborate.</li>
@@ -2006,8 +2024,10 @@ R Markdown manually and version control those changes, in order to
 benefit from the much more substanial gains in computational
 reproducibility that R Markdown offers. But I readily accept that that
 might not be the same calculation for everyone or for every project. In
-some cases, it might just be easier to use MS Word or some other package
-that is more familiar to the vast majority of the research team.</p>
+some cases, it might just be easier to use MS Word for manuscript
+preparation (or some other package) that is more familiar to the vast
+majority of the research team.</p>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div id="project-setup-practical-examples" class="section level1">
