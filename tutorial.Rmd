@@ -543,7 +543,7 @@ The red text tells you that renv() has been automatically bootstrapped and insta
 knitr::include_graphics("img/example2/2.3.png")
 ```
 
-you can select renv::restore() to install packages that are contained in the project's lock.file.
+you can type renv::restore() to install packages that are contained in the project's lock.file.
 Press "y" to proceed to install all packages and see the download in progress like this.
 This could take a few minutes, depending on the number of packages.
 
