@@ -29,7 +29,7 @@ general packages for data wrangling and visualisation used in various scripts
 ```
 
 packages for model building in brms used mainly in models.Rmd and effects.Rmd
-files. Of course, if you build regression models in other packagesm such as lme4
+files. Of course, if you build regression models in other packages such as lme4
 you may want to skip this stuff.
 
 ```{r}
