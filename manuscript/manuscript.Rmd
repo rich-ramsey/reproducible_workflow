@@ -2,6 +2,7 @@
 title             : "A tutorial on setting up a reproducible workflow in R and R Studio"
 shorttitle        : "Reproducible workflow"
 author: 
+      
   - name          : "Richard Ramsey"
     affiliation   : "1"
     corresponding : yes    # Define only one corresponding author
@@ -11,11 +12,10 @@ author:
       - "Conceptualization"
       - "Writing - Original Draft Preparation"
       - "Writing - Review & Editing"
-      
 affiliation:
+    
   - id            : "1"
     institution   : "ETH Zürich"
-    
 authornote: |
   Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
   Enter author note here.
