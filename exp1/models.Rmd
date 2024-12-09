@@ -36,7 +36,7 @@ supportsMulticore()
 detectCores()
 ```
 
-## read in data and create factors where necessary ##
+# 1. read in data and create factors where necessary #
 
 create a variable for stim and condition that uses deviation coding. 
 
@@ -65,7 +65,7 @@ This is useful if you want to look at aspects of a previously compiled model
 # b2 <- readRDS("exp1/models/b2.rds")
 ```
 
-## build some models ##
+# 2. build some models #
 
 At this point it is worth remembering that we are using gaussian / normal models
 below just for simplicity. RT data would probably be better modelled by a bunch of
@@ -108,7 +108,7 @@ priors <- c(
 )
 ```
 
-# run the model #
+## run the model ##
 
 ```{r b0-model}
 plan(multicore)
@@ -146,14 +146,14 @@ not important right now.
 full model here just means the maximum varying effects structure. See Barr et al.,
 2013 for justification. 
 
-# formula #
+## formula ##
 
 ```{r b1-formula}
 formula = bf(cs ~ 1 + stimd*compatd +
                (1 + stimd*compatd | pid))
 ```
 
-# check the priors available #
+## check the priors available ##
 
 ```{r b1-get-priors}
 get_prior(formula,
@@ -174,7 +174,7 @@ priors <- c(
 )
 ```
 
-# run the model #
+## run the model ##
 
 ```{r b1-model}
 plan(multicore)
@@ -210,14 +210,14 @@ pp_b1
 full model here just means the maximum varying effects structure. See Barr et al.,
 2013 for justification. 
 
-# formula #
+## formula ##
 
 ```{r b2-formula}
 formula = bf(rt ~ 1 + stimd*compatd +
                (1 + stimd*compatd | pid))
 ```
 
-# check the priors available #
+## check the priors available ##
 
 ```{r b2-get-priors}
 get_prior(formula,
@@ -242,6 +242,7 @@ And fixed effects
 visualize("normal(0, 25)", "normal(0, 50)", "normal(0, 100)", 
           xlim = c(-200, 200))
 ```
+
 ## set priors ##
 
 I use my usual 0,0.5 for slopes. 0,1 for sd. usual for cor.
@@ -256,7 +257,7 @@ priors <- c(
 )
 ```
 
-# run the model #
+## run the model ##
 
 ```{r b2-model}
 plan(multicore)
@@ -286,3 +287,38 @@ pp_b2 <- pp_check(b2, ndraws = 100, type = "dens_overlay_grouped",
 pp_b2
 ```
 
+# 3. model diagnostics #
+
+take a quick look at model diagnostics for the full rt model, just as an example.
+
+## rt model ##
+
+### look at the chains ###
+
+Here we visualise if the chains mixed reasonably well. We do this to see if there are any alarming patterns of non-mixing. You should see nicely overlapping caterpillar plots if all is well. This is only for the full model as it is the most complex, we would expect the less complex models to behave if this one behaves ok.
+
+full rt model
+
+```{r}
+# this adds the chains from model b1 and creates a posterior samples dataframe called post
+post <- as_draws_df(b2)
+head(post)
+
+## here I only focus on the chains for the key variables of interest, but one can easily visualise all the variables if one wishes. Although you'll need a lot of separate figures...
+
+post <- post %>%
+  select(contains(c("b_", "sd_", ".chain"))) %>% # here I select fixed effects and sds. 
+  mutate(chain = .chain)  
+
+# now we plot them and save them as necessary
+p_chains <- post %>%
+  mcmc_trace(facet_args = list(ncol = 3)) +
+  scale_x_continuous(breaks = c(0, 2000)) + # if you have 4000 post warm-up samples per chain
+  theme_bw() +
+  theme(legend.position = "bottom")
+p_chains
+
+# save it
+ggsave ("exp1/figures/b2_chains.jpeg",
+        width = 8, height = 6)
+```
