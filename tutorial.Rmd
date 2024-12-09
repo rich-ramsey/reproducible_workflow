@@ -370,6 +370,11 @@ See the papaja tutorial for details.
 
 A biblatex file for storing all other cited references.
 
+**/supplementary/**
+
+Inside the manuscript folder, there is a subfolder called "supplementary", which contains a supplementary.Rmd file.
+This can be used to produce a supplementary materials documents.
+
 ### settings to modify in the papaja template ###
 
 As the papaja manual suggests, I would recommend:
