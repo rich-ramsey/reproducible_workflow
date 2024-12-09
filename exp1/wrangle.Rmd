@@ -99,7 +99,7 @@ str(data)
 ```
 
 
-## section 3 ##
+# section 3 #
 
 ## make some summary data ##
 
@@ -238,7 +238,7 @@ p3.3 <- p3.1 | p3.2
 p3.3
 ```
 
-## section 4 ##
+# section 4 #
 
 ## calculate difference scores ##
 
@@ -353,7 +353,7 @@ ggsave("exp1/figures/diff_dens_q.png",
        width = 6, height = 8)
 ```
 
-## section 5 ##
+# section 5 #
 
 ## save out some data ##
 
