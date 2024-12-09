@@ -54,36 +54,60 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % Make \paragraph and \subparagraph free-standing
+\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
+\makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
 \newlength{\csllabelwidth}
 \setlength{\csllabelwidth}{3em}
-\newlength{\cslentryspacingunit} % times entry-spacing
-\setlength{\cslentryspacingunit}{\parskip}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
   % turn on hanging indent if param 1 is 1
   \ifodd #1
-  \let\oldpar\par
-  \def\par{\hangindent=\cslhangindent\oldpar}
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
   \fi
   % set entry spacing
-  \setlength{\parskip}{#2\cslentryspacingunit}
- }%
- {}
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
 \usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 \ifLuaTeX
 \usepackage[bidi=basic]{babel}
@@ -154,10 +178,11 @@
 \makeatletter
 \xapptocmd\appendix
   {\xapptocmd\section
-    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi\\: #1}}
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi: #1}}
     {}{\InnerPatchFailed}%
   }
 {}{\PatchFailed}
+\makeatother
 \keywords{keywords\newline\indent Word count: X}
 \usepackage{lineno}
 
@@ -167,7 +192,7 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
@@ -207,33 +232,25 @@ tbc
 \begin{document}
 \maketitle
 
-\hypertarget{introduction}{%
-\section{Introduction}\label{introduction}}
+\section{Introduction}\label{introduction}
 
-\hypertarget{methods}{%
-\section{Methods}\label{methods}}
+\section{Methods}\label{methods}
 
 We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study (Simmons, Nelson, \& Simonsohn, 2012).
 
-\hypertarget{participants}{%
-\subsection{Participants}\label{participants}}
+\subsection{Participants}\label{participants}
 
-\hypertarget{material}{%
-\subsection{Material}\label{material}}
+\subsection{Material}\label{material}
 
-\hypertarget{procedure}{%
-\subsection{Procedure}\label{procedure}}
+\subsection{Procedure}\label{procedure}
 
-\hypertarget{data-analysis}{%
-\subsection{Data analysis}\label{data-analysis}}
+\subsection{Data analysis}\label{data-analysis}
 
-We used R (Version 4.3.2; R Core Team, 2023) and the R-packages \emph{citr} (Version 0.3.2; Aust, 2019), \emph{dplyr} (Version 1.1.4; Wickham, François, Henry, Müller, \& Vaughan, 2023), \emph{forcats} (Version 1.0.0; Wickham, 2023a), \emph{ggplot2} (Version 3.5.0; Wickham, 2016), \emph{lubridate} (Version 1.9.3; Grolemund \& Wickham, 2011), \emph{papaja} (Version 0.1.2.9000; Aust \& Barth, 2023), \emph{patchwork} (Version 1.2.0; Pedersen, 2024), \emph{purrr} (Version 1.0.2; Wickham \& Henry, 2023), \emph{RColorBrewer} (Version 1.1.3; Neuwirth, 2022), \emph{readr} (Version 2.1.5; Wickham, Hester, \& Bryan, 2024), \emph{stringr} (Version 1.5.1; Wickham, 2023b), \emph{tibble} (Version 3.2.1; Müller \& Wickham, 2023), \emph{tidyr} (Version 1.3.1; Wickham, Vaughan, \& Girlich, 2024), \emph{tidyverse} (Version 2.0.0; Wickham et al., 2019), \emph{tinylabels} (Version 0.2.4; Barth, 2023), and \emph{tinytex} (Version 0.49; Xie, 2019) for all our analyses.
+We used R (Version 4.4.1; R Core Team, 2023) and the R-packages \emph{citr} (Version 0.3.2; Aust, 2019), \emph{dplyr} (Version 1.1.4; Wickham, François, Henry, Müller, \& Vaughan, 2023), \emph{forcats} (Version 1.0.0; Wickham, 2023a), \emph{ggplot2} (Version 3.5.1; Wickham, 2016), \emph{lubridate} (Version 1.9.4; Grolemund \& Wickham, 2011), \emph{papaja} (Version 0.1.3; Aust \& Barth, 2023), \emph{patchwork} (Version 1.3.0; Pedersen, 2024), \emph{purrr} (Version 1.0.2; Wickham \& Henry, 2023), \emph{RColorBrewer} (Version 1.1.3; Neuwirth, 2022), \emph{readr} (Version 2.1.5; Wickham, Hester, \& Bryan, 2024), \emph{stringr} (Version 1.5.1; Wickham, 2023b), \emph{tibble} (Version 3.2.1; Müller \& Wickham, 2023), \emph{tidyr} (Version 1.3.1; Wickham, Vaughan, \& Girlich, 2024), \emph{tidyverse} (Version 2.0.0; Wickham et al., 2019), \emph{tinylabels} (Version 0.2.4; Barth, 2023) and \emph{tinytex} (Version 0.54; Xie, 2019) for all our analyses.
 
-\hypertarget{results}{%
-\section{Results}\label{results}}
+\section{Results}\label{results}
 
-\hypertarget{descriptive-statistics}{%
-\subsection{Descriptive statistics}\label{descriptive-statistics}}
+\subsection{Descriptive statistics}\label{descriptive-statistics}
 
 Raw data plots
 
@@ -243,7 +260,7 @@ Accuracy by condition violin plot
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=6in,height=0.67\textheight,]{../exp1/figures/acc_violin} 
+{\centering \includegraphics[height=0.67\textheight,]{../exp1/figures/acc_violin} 
 
 }
 
@@ -256,7 +273,7 @@ Reaction time by condition violin plot
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=6in,height=0.67\textheight,]{../exp1/figures/rt_violin} 
+{\centering \includegraphics[height=0.67\textheight,]{../exp1/figures/rt_violin} 
 
 }
 
@@ -269,7 +286,7 @@ Reaction time by difference scores violin plot
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=6in,height=0.67\textheight,]{../exp1/figures/diff_violin} 
+{\centering \includegraphics[height=0.67\textheight,]{../exp1/figures/diff_violin} 
 
 }
 
@@ -282,15 +299,14 @@ Reaction time by difference scores density plot with quantiles
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=6in,height=0.67\textheight,]{../exp1/figures/diff_dens_q} 
+{\centering \includegraphics[height=0.67\textheight,]{../exp1/figures/diff_dens_q} 
 
 }
 
 \caption{RT difference scores (incomp - compat) as a density plot.}\label{fig:diff-dens-plot}
 \end{figure}
 
-\hypertarget{inferential-statistics}{%
-\subsection{Inferential statistics}\label{inferential-statistics}}
+\subsection{Inferential statistics}\label{inferential-statistics}
 
 Now we plot and tabulate parameters from the posterior distribution.
 
@@ -300,7 +316,7 @@ Fixed effects from model b2
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=6in,height=0.67\textheight,]{../exp1/figures/b2_fixef} 
+{\centering \includegraphics[height=0.67\textheight,]{../exp1/figures/b2_fixef} 
 
 }
 
@@ -339,68 +355,66 @@ interaction & -2.08 & -10.80 & 6.85\\
 
 \end{table}
 
-\hypertarget{discussion}{%
-\section{Discussion}\label{discussion}}
+\section{Discussion}\label{discussion}
 
 \newpage
 
-\hypertarget{references}{%
-\section{References}\label{references}}
+\section{References}\label{references}
 
-\hypertarget{refs}{}
+\phantomsection\label{refs}
 \begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-R-citr}{}}%
+\bibitem[\citeproctext]{ref-R-citr}
 Aust, F. (2019). \emph{Citr: 'RStudio' add-in to insert markdown citations}. Retrieved from \url{https://github.com/crsh/citr}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-papaja}{}}%
+\bibitem[\citeproctext]{ref-R-papaja}
 Aust, F., \& Barth, M. (2023). \emph{{papaja}: {Prepare} reproducible {APA} journal articles with {R Markdown}}. Retrieved from \url{https://github.com/crsh/papaja}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-tinylabels}{}}%
+\bibitem[\citeproctext]{ref-R-tinylabels}
 Barth, M. (2023). \emph{{tinylabels}: Lightweight variable labels}. Retrieved from \url{https://cran.r-project.org/package=tinylabels}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-lubridate}{}}%
+\bibitem[\citeproctext]{ref-R-lubridate}
 Grolemund, G., \& Wickham, H. (2011). Dates and times made easy with {lubridate}. \emph{Journal of Statistical Software}, \emph{40}(3), 1--25. Retrieved from \url{https://www.jstatsoft.org/v40/i03/}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-tibble}{}}%
+\bibitem[\citeproctext]{ref-R-tibble}
 Müller, K., \& Wickham, H. (2023). \emph{Tibble: Simple data frames}. Retrieved from \url{https://CRAN.R-project.org/package=tibble}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-RColorBrewer}{}}%
+\bibitem[\citeproctext]{ref-R-RColorBrewer}
 Neuwirth, E. (2022). \emph{RColorBrewer: ColorBrewer palettes}. Retrieved from \url{https://CRAN.R-project.org/package=RColorBrewer}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-patchwork}{}}%
+\bibitem[\citeproctext]{ref-R-patchwork}
 Pedersen, T. L. (2024). \emph{Patchwork: The composer of plots}. Retrieved from \url{https://CRAN.R-project.org/package=patchwork}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
+\bibitem[\citeproctext]{ref-R-base}
 R Core Team. (2023). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
 
-\leavevmode\vadjust pre{\hypertarget{ref-simmons2012}{}}%
+\bibitem[\citeproctext]{ref-simmons2012}
 Simmons, J. P., Nelson, L. D., \& Simonsohn, U. (2012). \emph{A 21 {Word Solution}} (SSRN Scholarly Paper No. 2160588). {Rochester, NY}: {Social Science Research Network}. \url{https://doi.org/10.2139/ssrn.2160588}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-ggplot2}{}}%
+\bibitem[\citeproctext]{ref-R-ggplot2}
 Wickham, H. (2016). \emph{ggplot2: Elegant graphics for data analysis}. Springer-Verlag New York. Retrieved from \url{https://ggplot2.tidyverse.org}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-forcats}{}}%
+\bibitem[\citeproctext]{ref-R-forcats}
 Wickham, H. (2023a). \emph{Forcats: Tools for working with categorical variables (factors)}. Retrieved from \url{https://CRAN.R-project.org/package=forcats}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-stringr}{}}%
+\bibitem[\citeproctext]{ref-R-stringr}
 Wickham, H. (2023b). \emph{Stringr: Simple, consistent wrappers for common string operations}. Retrieved from \url{https://CRAN.R-project.org/package=stringr}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-tidyverse}{}}%
+\bibitem[\citeproctext]{ref-R-tidyverse}
 Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., \ldots{} Yutani, H. (2019). Welcome to the {tidyverse}. \emph{Journal of Open Source Software}, \emph{4}(43), 1686. \url{https://doi.org/10.21105/joss.01686}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-dplyr}{}}%
+\bibitem[\citeproctext]{ref-R-dplyr}
 Wickham, H., François, R., Henry, L., Müller, K., \& Vaughan, D. (2023). \emph{Dplyr: A grammar of data manipulation}. Retrieved from \url{https://CRAN.R-project.org/package=dplyr}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-purrr}{}}%
+\bibitem[\citeproctext]{ref-R-purrr}
 Wickham, H., \& Henry, L. (2023). \emph{Purrr: Functional programming tools}. Retrieved from \url{https://CRAN.R-project.org/package=purrr}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-readr}{}}%
+\bibitem[\citeproctext]{ref-R-readr}
 Wickham, H., Hester, J., \& Bryan, J. (2024). \emph{Readr: Read rectangular text data}. Retrieved from \url{https://CRAN.R-project.org/package=readr}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-tidyr}{}}%
+\bibitem[\citeproctext]{ref-R-tidyr}
 Wickham, H., Vaughan, D., \& Girlich, M. (2024). \emph{Tidyr: Tidy messy data}. Retrieved from \url{https://CRAN.R-project.org/package=tidyr}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-tinytex}{}}%
+\bibitem[\citeproctext]{ref-R-tinytex}
 Xie, Y. (2019). TinyTeX: A lightweight, cross-platform, and easy-to-maintain LaTeX distribution based on TeX live. \emph{TUGboat}, \emph{40}(1), 30--32. Retrieved from \url{https://tug.org/TUGboat/Contents/contents40-1.html}
 
 \end{CSLReferences}
