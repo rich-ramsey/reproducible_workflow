@@ -32,7 +32,7 @@ mask              : no
 figurelist        : no
 tablelist         : no
 footnotelist      : no
-classoption       : "man"
+classoption       : "man, donotrepeattitle"
 output            : papaja::apa6_pdf
 # output            : papaja::apa6_word
 editor_options: 
